@@ -1,0 +1,22 @@
+#* ************************************************************************** *#
+##         .-.
+##   __   /   \   __
+##  (  `'.\   /.'`  )  Roze - Cargo.toml
+##   '-._.(;;;)._.-'
+##   .-'  ,`"`,  '-.
+##  (__.-'/   \'-.__)  By: Rosie (https://github.com/BlankRose)
+##      //\   /        Created at: April 27, 2024 [5:29 PM]
+##     ||  '-'
+#* ************************************************************************** *#
+
+[package]
+name = "roze"
+version = "0.0.1"
+edition = "2021"
+authors = ["Rosie <https://github.com/BlankRose>"]
+license = "MIT"
+
+[dependencies]
+sea-orm = { version = "0.12.15", features = ["sqlx-postgres", "macros", "runtime-tokio"] }
+serenity = "0.12.1"
+tokio = { version = "1.37.0", features = ["macros", "rt-multi-thread"] }
