@@ -10,11 +10,13 @@
 #* ************************************************************************** *#
 
 FROM rust:1.77-alpine3.19 AS builder
-WORKDIR /src
-COPY . .
+RUN apk add --no-cache musl-dev
+WORKDIR /build
+COPY Cargo.toml .
+COPY src src
 RUN cargo install --path . --root /out
 
 FROM alpine:3.19 AS execution
 LABEL authors="rosie"
-COPY --from=builder /out/roze /app
+COPY --from=builder /out/bin/roze /app
 ENTRYPOINT ["/app"]
