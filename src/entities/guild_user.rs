@@ -10,13 +10,14 @@
 /* ************************************************************************** */
 
 use sea_orm::entity::prelude::*;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, Serialize, Deserialize)]
 #[sea_orm(table_name = "guild_users")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
-    pub entry_id: u32,
+    pub entry_id: i32,
 
     /// Determines which user the entry is related to
     pub user_id: String,

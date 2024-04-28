@@ -11,12 +11,13 @@
 
 [package]
 name = "roze"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2021"
 authors = ["Rosie <https://github.com/BlankRose>"]
 license = "MIT"
 
 [dependencies]
-sea-orm = { version = "0.12.15", features = ["sqlx-postgres", "macros", "runtime-tokio"] }
+sea-orm = { version = "0.12.15", features = ["sqlx-postgres", "macros", "runtime-tokio-native-tls", "serde_json"] }
 serenity = "0.12.1"
 tokio = { version = "1.37.0", features = ["macros", "rt-multi-thread"] }
+serde = { version = "1.0.199", features = ["derive"] }
