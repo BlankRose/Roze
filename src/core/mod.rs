@@ -9,4 +9,5 @@
 //     ||  '-'
 /* ************************************************************************** */
 
-pub(crate) mod database;
+mod database;
+pub use database::Database;

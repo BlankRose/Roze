@@ -9,13 +9,13 @@
 //     ||  '-'
 /* ************************************************************************** */
 
-use sea_orm::{DatabaseConnection};
 use serenity::all::{Context, EventHandler, Ready};
 use serenity::async_trait;
+use crate::core::Database;
 
 pub struct Handler
 {
-    pub database: DatabaseConnection
+    pub database: Database
 }
 
 #[async_trait]
