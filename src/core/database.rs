@@ -28,7 +28,7 @@ impl Database
         let conn = sea_orm::Database::connect(db_opts).await
             .expect("Failed to connect to database: ");
         Self::prepare_database(&conn);
-        return Self{ conn };
+        return Self{conn};
     }
 
     fn prepare_database(database: &DatabaseConnection)
@@ -57,8 +57,11 @@ impl<'a> DatabaseBuilder<'a>
 
     pub fn create_table<T: EntityTrait>(&self, entity: T) -> &Self
     {
+        #[cfg(debug_assertions)]
+        drop(self.connection.execute_unprepared(&("DROP TABLE ".to_string() + entity.table_name() + ";")));
+
         let query = self.backend.build(&self.schema.create_table_from_entity(entity));
-        let _ = self.connection.execute(query);
+        drop(self.connection.execute(query));
         return self;
     }
 }

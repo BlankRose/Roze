@@ -9,6 +9,9 @@
 //     ||  '-'
 /* ************************************************************************** */
 
+// Explicit returns helps readability
+#![allow(clippy::needless_return)]
+
 mod entities;
 mod events;
 mod core;
