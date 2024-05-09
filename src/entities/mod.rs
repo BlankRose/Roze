@@ -10,7 +10,9 @@
 /* ************************************************************************** */
 
 pub(crate) mod guild_user;
-pub use guild_user::Entity as GuildUser;
+pub(crate) mod global_user;
+pub(crate) mod guild;
 
-mod global_user;
+pub use guild_user::Entity as GuildUser;
 pub use global_user::Entity as GlobalUser;
+pub use guild::Entity as Guild;

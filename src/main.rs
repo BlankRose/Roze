@@ -33,7 +33,7 @@ async fn main() {
     let intents = GatewayIntents::non_privileged()
         | GatewayIntents::MESSAGE_CONTENT
         | GatewayIntents::GUILD_MEMBERS;
-    let mut client = Client::builder(token, intents).event_handler(EventHandler { database }).await
+    let mut client = Client::builder(token, intents).event_handler(EventHandler{ database }).await
         .expect("Failed to build the client.. Please make sure the provided token is correct!");
 
     if let Err(what) = client.start().await {
