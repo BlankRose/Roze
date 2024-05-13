@@ -12,6 +12,9 @@
 // Explicit returns helps readability
 #![allow(clippy::needless_return)]
 
+// Init localization
+rust_i18n::i18n!("locales", fallback = "en_us");
+
 mod entities;
 mod events;
 mod core;
@@ -20,7 +23,7 @@ mod modules;
 use std::env;
 use serenity::all::GatewayIntents;
 use serenity::Client;
-use crate::core::Database;
+use crate::core::{Database};
 use crate::events::EventHandler;
 
 #[tokio::main]

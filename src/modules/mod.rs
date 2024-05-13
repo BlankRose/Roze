@@ -9,11 +9,11 @@
 //     ||  '-'
 /* ************************************************************************** */
 
-mod modules;
-mod module_base;
+mod all;
+mod base;
 
-pub use modules::Modules;
-pub use module_base::*;
+pub use all::Modules;
+pub use base::*;
 
 pub(crate) mod prettier;
 pub use prettier::Prettier;

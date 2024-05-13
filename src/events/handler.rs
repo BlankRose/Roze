@@ -11,7 +11,7 @@
 
 use serenity::all::{ActivityData, Context, EventHandler, Interaction, Ready};
 use serenity::async_trait;
-use crate::core::Database;
+use crate::core::{Database};
 use crate::modules::Modules;
 
 pub struct Handler
