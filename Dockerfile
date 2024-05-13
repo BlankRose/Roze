@@ -18,5 +18,7 @@ RUN cargo install --path . --root /out
 
 FROM alpine:3.19 AS execution
 LABEL authors="rosie"
-COPY --from=builder /out/bin/roze /app
-ENTRYPOINT ["/app"]
+WORKDIR /app
+COPY --from=builder /out/bin/roze ./run
+COPY locales .
+ENTRYPOINT ["./run"]
