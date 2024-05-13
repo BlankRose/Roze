@@ -9,20 +9,39 @@
 //     ||  '-'
 /* ************************************************************************** */
 
-use serenity::all::{Context, EventHandler, Ready};
+use serenity::all::{ActivityData, Context, EventHandler, Interaction, Ready};
 use serenity::async_trait;
 use crate::core::Database;
+use crate::modules::Modules;
 
 pub struct Handler
 {
-    pub database: Database
+    database: Database,
+    modules: Modules,
+}
+
+impl Handler
+{
+    pub fn new(database: Database) -> Self
+    {
+        return Self{ database, modules: Modules::new() };
+    }
 }
 
 #[async_trait]
 impl EventHandler for Handler
 {
-    async fn ready(&self, _: Context, _: Ready)
+    async fn ready(&self, ctx: Context, _: Ready)
     {
+        let activity = ActivityData::custom("Up and running!");
+        ctx.set_activity(Some(activity));
+
+        self.modules.register_modules(&ctx.http);
+
         println!("Client is ready and now online!");
+    }
+
+    async fn interaction_create(&self, _: Context, _: Interaction)
+    {
     }
 }

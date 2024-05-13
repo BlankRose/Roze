@@ -15,6 +15,7 @@
 mod entities;
 mod events;
 mod core;
+mod modules;
 
 use std::env;
 use serenity::all::GatewayIntents;
@@ -23,7 +24,8 @@ use crate::core::Database;
 use crate::events::EventHandler;
 
 #[tokio::main]
-async fn main() {
+async fn main()
+{
     let db_url = env::var("DATABASE")
         .expect("Missing environment variable: DATABASE");
     let database = Database::new(&db_url).await;
@@ -33,10 +35,10 @@ async fn main() {
     let intents = GatewayIntents::non_privileged()
         | GatewayIntents::MESSAGE_CONTENT
         | GatewayIntents::GUILD_MEMBERS;
-    let mut client = Client::builder(token, intents).event_handler(EventHandler{ database }).await
+    let handler = EventHandler::new(database);
+    let mut client = Client::builder(token, intents).event_handler(handler).await
         .expect("Failed to build the client.. Please make sure the provided token is correct!");
 
-    if let Err(what) = client.start().await {
-        eprintln!("An error occurred: {what:?}");
-    }
+    if let Err(what) = client.start().await
+        { eprintln!("An error occurred: {what:?}"); }
 }
