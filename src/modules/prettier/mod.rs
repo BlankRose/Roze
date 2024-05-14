@@ -9,11 +9,9 @@
 //     ||  '-'
 /* ************************************************************************** */
 
-mod embed;
+pub(crate) mod embed;
 
 use crate::declare_module;
-use crate::modules::{ModuleBase, SubModulesArray};
-
 declare_module!(
     Prettier,
     description "Toolkit for generating various elements",

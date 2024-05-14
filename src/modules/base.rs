@@ -16,6 +16,7 @@ pub trait SubModuleBase
     fn name(&self) -> &'static str;
     fn docs(&self) -> Option<&'static str> { None }
     fn register_command(&self) -> Option<CreateCommand> { None }
+    fn run_command(&self) -> Result<(), ()> { Ok(()) }
 }
 
 pub trait ModuleBase
@@ -31,6 +32,7 @@ pub type SubModulesArray = Vec<Box<dyn SubModuleBase + Send + Sync>>;
 pub type ModulesArray = Vec<Box<dyn ModuleBase + Send + Sync>>;
 
 #[macro_export]
+/// Intended for single use in modules' mod.rs file
 macro_rules! declare_module
 {
     ($name: ident,
@@ -45,6 +47,8 @@ macro_rules! declare_module
         docs $docs: literal,
         sub_modules $($sub_mods: expr),*)
     => {
+        use $crate::modules::{ModuleBase, SubModulesArray};
+
         pub struct $name
         {
             sub_modules: SubModulesArray
@@ -53,29 +57,12 @@ macro_rules! declare_module
         impl ModuleBase for $name
         {
             fn new() -> Box<Self> where Self: Sized
-            {
-                return Box::new(Self{ sub_modules: vec![$($sub_mods{})*] });
-            }
+                { Box::new(Self{ sub_modules: vec![$($sub_mods{})*] }) }
 
-            fn sub_modules(&self) -> &SubModulesArray
-            {
-                return &self.sub_modules;
-            }
-
-            fn name(&self) -> &'static str
-            {
-                return stringify!($name);
-            }
-
-            fn description(&self) -> &'static str
-            {
-                return $desc;
-            }
-
-            fn docs(&self) -> &'static str
-            {
-                return $docs;
-            }
+            fn sub_modules(&self) -> &SubModulesArray { &self.sub_modules }
+            fn name(&self) -> &'static str { stringify!($name) }
+            fn description(&self) -> &'static str { $desc }
+            fn docs(&self) -> &'static str { $docs }
         }
     };
 }
