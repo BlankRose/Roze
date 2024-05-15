@@ -57,7 +57,9 @@ macro_rules! declare_module
         impl ModuleBase for $name
         {
             fn new() -> Box<Self> where Self: Sized
-                { Box::new(Self{ sub_modules: vec![$($sub_mods{})*] }) }
+                { Box::new(Self{ sub_modules: vec![
+                    $(Box::new($sub_mods))*
+                ] }) }
 
             fn sub_modules(&self) -> &SubModulesArray { &self.sub_modules }
             fn name(&self) -> &'static str { stringify!($name) }

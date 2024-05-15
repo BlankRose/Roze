@@ -26,13 +26,18 @@ impl Modules
         ] };
     }
 
-    pub fn register_modules(&self, http: impl CacheHttp)
+    pub async fn register_modules(&self, http: impl CacheHttp)
     {
         for module in &self.modules {
             println!("Registering module: {}", module.name());
             for sub_module in module.sub_modules() {
-                if let Some(command) = sub_module.register_command() {
-                    drop(Command::create_global_command(&http, command));
+                if let Some(command) = sub_module.register_command()
+                {
+                    if let Err(res) = Command::create_global_command(&http, command).await {
+                        eprintln!("Failed to register {}:\n{}", sub_module.name(), res);
+                    } else {
+                        println!("Registered {}!", sub_module.name());
+                    }
                 }
             }
         }

@@ -15,5 +15,6 @@ use crate::declare_module;
 declare_module!(
     Prettier,
     description "Toolkit for generating various elements",
-    docs ""
+    docs "",
+    sub_modules embed::EmbedCreator{}
 );

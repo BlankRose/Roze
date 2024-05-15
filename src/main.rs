@@ -13,7 +13,7 @@
 #![allow(clippy::needless_return)]
 
 // Init localization
-rust_i18n::i18n!("locales", fallback = "en_us");
+rust_i18n::i18n!("locales", fallback = "en-US");
 
 mod entities;
 mod events;
@@ -32,6 +32,9 @@ async fn main()
     let db_url = env::var("DATABASE")
         .expect("Missing environment variable: DATABASE");
     let database = Database::new(&db_url).await;
+
+    println!("{:?}", rust_i18n::available_locales!());
+    println!("{}", rust_i18n::t!("commands.embed.description"));
 
     let token = env::var("TOKEN")
         .expect("Missing environment variable: TOKEN");

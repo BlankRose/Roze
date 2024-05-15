@@ -36,7 +36,7 @@ impl EventHandler for Handler
         let activity = ActivityData::custom("Up and running!");
         ctx.set_activity(Some(activity));
 
-        self.modules.register_modules(&ctx.http);
+        self.modules.register_modules(&ctx.http).await;
 
         println!("Client is ready and now online!");
     }

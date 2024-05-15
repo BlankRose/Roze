@@ -10,7 +10,7 @@
 /* ************************************************************************** */
 
 use serenity::all::CreateCommand;
-use crate::modules::SubModuleBase;
+use crate::modules::{helper, SubModuleBase};
 
 pub struct EmbedCreator {}
 
@@ -23,7 +23,7 @@ impl SubModuleBase for EmbedCreator
 
     fn register_command(&self) -> Option<CreateCommand>
     {
-        return Some(CreateCommand::new(self.name())
+        return Some(helper::new_command(self)
             .description("Handles embed creation")
             .dm_permission(false));
     }
