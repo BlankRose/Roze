@@ -23,7 +23,7 @@ mod modules;
 use std::env;
 use serenity::all::GatewayIntents;
 use serenity::Client;
-use crate::core::{Database};
+use crate::core::{Database, LOCALES};
 use crate::events::EventHandler;
 
 #[tokio::main]
@@ -32,6 +32,8 @@ async fn main()
     let db_url = env::var("DATABASE")
         .expect("Missing environment variable: DATABASE");
     let database = Database::new(&db_url).await;
+
+    println!("{}", LOCALES.get("test.value", "en-US"));
 
     let token = env::var("TOKEN")
         .expect("Missing environment variable: TOKEN");
