@@ -10,6 +10,7 @@
 /* ************************************************************************** */
 
 use serenity::all::{CacheHttp, Command};
+use crate::core::InteractionContext;
 use super::{ModuleBase, ModulesArray, Prettier};
 
 pub struct Modules
@@ -28,16 +29,31 @@ impl Modules
 
     pub async fn register_modules(&self, http: impl CacheHttp)
     {
-        for module in &self.modules {
-            println!("Registering module: {}", module.name());
-            for sub_module in module.sub_modules() {
+        for module in &self.modules
+        {
+            for sub_module in module.sub_modules()
+            {
                 if let Some(command) = sub_module.register_command()
                 {
-                    if let Err(res) = Command::create_global_command(&http, command).await {
-                        eprintln!("Failed to register {}:\n{}", sub_module.name(), res);
-                    } else {
-                        println!("Registered {}!", sub_module.name());
-                    }
+                    if let Err(res) = Command::create_global_command(&http, command).await
+                        { eprintln!("Failed to register {}:\n{}", sub_module.name(), res); }
+                    else
+                        { println!("Registered {}/{}!", module.name(), sub_module.name()); }
+                }
+            }
+        }
+    }
+
+    pub fn run_command(&self, ctx: InteractionContext<'_>)
+    {
+        for module in &self.modules
+        {
+            for sub_module in module.sub_modules()
+            {
+                if sub_module.name() == ctx.interaction.data.name
+                {
+                    drop(sub_module.run_command(ctx));
+                    return;
                 }
             }
         }

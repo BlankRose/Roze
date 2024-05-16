@@ -33,9 +33,6 @@ async fn main()
         .expect("Missing environment variable: DATABASE");
     let database = Database::new(&db_url).await;
 
-    println!("{:?}", rust_i18n::available_locales!());
-    println!("{}", rust_i18n::t!("commands.embed.description"));
-
     let token = env::var("TOKEN")
         .expect("Missing environment variable: TOKEN");
     let intents = GatewayIntents::non_privileged()

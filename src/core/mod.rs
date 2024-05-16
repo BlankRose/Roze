@@ -11,5 +11,7 @@
 
 mod database;
 mod macros;
+mod contexts;
 
 pub use database::Database;
+pub use contexts::*;

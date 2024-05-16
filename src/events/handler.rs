@@ -9,9 +9,9 @@
 //     ||  '-'
 /* ************************************************************************** */
 
-use serenity::all::{ActivityData, Context, EventHandler, Interaction, Ready};
+use serenity::all::{ActivityData, Context, EventHandler, Interaction, InteractionType, Ready};
 use serenity::async_trait;
-use crate::core::{Database};
+use crate::core::{Database, InteractionContext};
 use crate::modules::Modules;
 
 pub struct Handler
@@ -31,17 +31,18 @@ impl Handler
 #[async_trait]
 impl EventHandler for Handler
 {
-    async fn ready(&self, ctx: Context, _: Ready)
+    async fn ready(&self, context: Context, _: Ready)
     {
         let activity = ActivityData::custom("Up and running!");
-        ctx.set_activity(Some(activity));
-
-        self.modules.register_modules(&ctx.http).await;
+        context.set_activity(Some(activity));
+        drop(self.modules.register_modules(&context.http));
 
         println!("Client is ready and now online!");
     }
 
-    async fn interaction_create(&self, _: Context, _: Interaction)
+    async fn interaction_create(&self, context: Context, interaction: Interaction)
     {
+        if interaction.kind() == InteractionType::Command
+            { self.modules.run_command(InteractionContext::new(&self.database, context, interaction.command().unwrap())); }
     }
 }

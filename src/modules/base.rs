@@ -9,14 +9,17 @@
 //     ||  '-'
 /* ************************************************************************** */
 
+use async_trait::async_trait;
 use serenity::all::{CreateCommand};
+use crate::core::InteractionContext;
 
+#[async_trait]
 pub trait SubModuleBase
 {
     fn name(&self) -> &'static str;
     fn docs(&self) -> Option<&'static str> { None }
     fn register_command(&self) -> Option<CreateCommand> { None }
-    fn run_command(&self) -> Result<(), ()> { Ok(()) }
+    async fn run_command(&self, _ctx: InteractionContext<'_>) -> Result<(), ()> { Ok(()) }
 }
 
 pub trait ModuleBase
@@ -28,8 +31,10 @@ pub trait ModuleBase
     fn docs(&self) -> &'static str;
 }
 
-pub type SubModulesArray = Vec<Box<dyn SubModuleBase + Send + Sync>>;
-pub type ModulesArray = Vec<Box<dyn ModuleBase + Send + Sync>>;
+pub type SubModule = Box<dyn SubModuleBase + Send + Sync>;
+pub type SubModulesArray = Vec<SubModule>;
+pub type Module = Box<dyn ModuleBase + Send + Sync>;
+pub type ModulesArray = Vec<Module>;
 
 #[macro_export]
 /// Intended for single use in modules' mod.rs file

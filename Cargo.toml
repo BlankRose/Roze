@@ -25,6 +25,7 @@ log = { version = "0.4.21", features = [] }
 indoc = "2.0.5"
 lazy_static = "1.4.0"
 rust-i18n = "3.0.1"
+async-trait = "0.1.80"
 
 [profile.release]
 strip = true
