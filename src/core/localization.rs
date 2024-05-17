@@ -19,12 +19,13 @@ type LocaleMap = HashMap<String, SingleLocaleMap>;
 
 pub struct Localization
 {
-    locales: LocaleMap
+    locales: LocaleMap,
+    default: String,
 }
 
 impl Localization
 {
-    pub fn new(dir_path: &'static str) -> Self
+    pub fn new(dir_path: &'static str, default: &'static str) -> Self
     {
         println!("Loading localizations..");
         let paths = match read_dir(dir_path) {
@@ -32,6 +33,7 @@ impl Localization
             Err(error) => panic!("Failed to read directory {}: {}", dir_path, error)
         };
 
+        let default = default.to_string();
         let mut locales = LocaleMap::new();
         for entry in paths
         {
@@ -49,22 +51,37 @@ impl Localization
             let mut sub_locale = SingleLocaleMap::new();
             for line in content.lines()
             {
+                match line.split_once('=') {
+                    Some((key, value)) =>
+                        drop(sub_locale.insert(key.trim().to_string(), value.trim().to_string())),
+                    None => {}
+                };
             }
 
             locales.insert(name.to_str().unwrap().to_string(), sub_locale);
         }
 
         println!("Localizations successfully loaded!");
-        return Self{locales};
+        return Self{locales, default};
     }
 
-    pub fn get(&self, key: &'static str, locale: &'static str) -> String
+    pub fn get<T: Into<String>>(&self, key: T, locale: T) -> String
     {
-        return key.to_string();
+        let key = key.into();
+        let locale = locale.into();
+
+        if let Some(sub_locale) = self.locales.get(&locale)
+        {
+            if let Some(result) = sub_locale.get(&key)
+                { return result.to_owned(); }
+            else if locale != self.default
+                { return self.get(key, self.default.to_owned()); }
+        }
+        return key;
     }
 }
 
 lazy_static!(
     pub static ref LOCALES: Localization
-        = Localization::new("locales");
+        = Localization::new("locales", "en-US");
 );
