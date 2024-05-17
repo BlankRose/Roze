@@ -1,5 +1,0 @@
-commands.embed.name = "embed"
-commands.embed.description = "Handles embed creation"
-
-commands.ping.name = "ping"
-commands.ping.description = "Pings the application"

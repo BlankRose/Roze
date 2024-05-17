@@ -9,8 +9,9 @@
 //     ||  '-'
 /* ************************************************************************** */
 
+use crate::core::LOCALES;
 use serenity::all::CreateCommand;
-use rust_i18n::{t, available_locales};
+use crate::get_locale;
 use super::SubModuleBase;
 
 pub fn new_command(module: &impl SubModuleBase) -> CreateCommand
@@ -19,13 +20,12 @@ pub fn new_command(module: &impl SubModuleBase) -> CreateCommand
     let locale_desc = format!("commands.{}.description", module.name());
 
     let mut cmd = CreateCommand::new(module.name())
-        .description(t!(&locale_desc));
-    for loc in available_locales!()
+        .description(get_locale!(&locale_desc));
+    for locale in LOCALES.get_available()
     {
-        let locale_str = loc.to_string();
         cmd = cmd
-            .name_localized(&locale_str, t!(&locale_name, locale = loc))
-            .description_localized(locale_str, t!(&locale_desc, locale = loc));
+            .name_localized(locale, get_locale!(&locale_name, locale = locale))
+            .description_localized(locale, get_locale!(&locale_desc, locale = locale));
     }
     return cmd;
 }

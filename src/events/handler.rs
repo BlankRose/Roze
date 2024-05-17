@@ -35,7 +35,7 @@ impl EventHandler for Handler
     {
         let activity = ActivityData::custom("Up and running!");
         context.set_activity(Some(activity));
-        drop(self.modules.register_modules(&context.http));
+        self.modules.register_modules(&context.http).await;
 
         println!("Client is ready and now online!");
     }
