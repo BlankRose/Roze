@@ -11,7 +11,9 @@
 
 use serenity::all::{CacheHttp, Command};
 use crate::core::InteractionContext;
-use super::{ModuleBase, ModulesArray, Prettier};
+use crate::{LOCALES, get_locale};
+use crate::modules::helper::Reply;
+use super::{Basic, ModuleBase, ModulesArray, Prettier};
 
 pub struct Modules
 {
@@ -23,7 +25,8 @@ impl Modules
     pub fn new() -> Self
     {
         return Self{ modules: vec![
-            Prettier::new()
+            Prettier::new(),
+            Basic::new(),
         ] };
     }
 
@@ -44,18 +47,26 @@ impl Modules
         }
     }
 
-    pub fn run_command(&self, ctx: InteractionContext<'_>)
+    pub async fn run_command(&self, ctx: InteractionContext<'_>)
     {
+        let mut reply = Reply::new(&ctx);
         for module in &self.modules
         {
             for sub_module in module.sub_modules()
             {
                 if sub_module.name() == ctx.interaction.data.name
                 {
-                    drop(sub_module.run_command(ctx));
+                    let _ = sub_module.run_command(&ctx, &mut reply).await;
                     return;
                 }
             }
         }
+        let _ = Reply::new(&ctx)
+            .content(Some(get_locale!(
+                "commands.not_found",
+                locale = &ctx.interaction.locale
+            )))
+            .ephemeral(true)
+            .send().await;
     }
 }

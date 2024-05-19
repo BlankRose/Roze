@@ -1,5 +1,9 @@
-commands.embed.name = embed
-commands.embed.description = Gere la creation d'embeds
+commands.not_found              = On n'a pas pu trouver la commande que vous recherchiez... :(
+commands.not_implemented        = Cette commande n'est pas encore implémentée!
 
-commands.ping.name = ping
-commands.ping.description = Envoie un ping a l'application
+commands.embed.name             = embed
+commands.embed.description      = Gère la création d'embeds
+
+commands.ping.name              = ping
+commands.ping.description       = Envoie un ping à l'application
+commands.ping.reply             = Pong, sur le shard $0

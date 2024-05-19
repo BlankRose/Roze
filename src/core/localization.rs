@@ -159,6 +159,11 @@ lazy_static!(
 );
 
 #[macro_export]
+/// Utility macro which retrieve the translated string for
+/// the given `key`, and given `locale` if provided
+/// (otherwise, uses `default`).
+///
+/// Additional `args` may be passed for formating the strings
 macro_rules! get_locale {
     ($key: expr) => {
         LOCALES.get_default($key)
@@ -174,5 +179,14 @@ macro_rules! get_locale {
     };
     ($key: expr, args = $($args: expr), *, locale = $locale: expr) => {
         LOCALES.getf($key, $locale, vec![$($args)*])
+    };
+}
+
+#[macro_export]
+/// Utility macro which retrieves all the available locales as an array of string,
+/// ready to be passed down to `get` functions
+macro_rules! get_locales {
+    () => {
+        LOCALES.get_available()
     };
 }

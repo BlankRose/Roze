@@ -1,5 +1,9 @@
+commands.not_found              = Couldnt find the command you were looking for... :(
+commands.not_implemented        = This command is not implemented!
+
 commands.embed.name             = embed
 commands.embed.description      = Handles embed creation
 
 commands.ping.name              = ping
 commands.ping.description       = Pings the application
+commands.ping.reply             = Pong, on shard $0

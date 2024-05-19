@@ -12,6 +12,8 @@
 use async_trait::async_trait;
 use serenity::all::{CreateCommand};
 use crate::core::InteractionContext;
+use crate::{LOCALES, get_locale};
+use crate::modules::helper::Reply;
 
 #[async_trait]
 pub trait SubModuleBase
@@ -19,7 +21,16 @@ pub trait SubModuleBase
     fn name(&self) -> &'static str;
     fn docs(&self) -> Option<&'static str> { None }
     fn register_command(&self) -> Option<CreateCommand> { None }
-    async fn run_command(&self, _ctx: InteractionContext<'_>) -> Result<(), ()> { Ok(()) }
+
+    async fn run_command(&self, ctx: &InteractionContext<'_>, reply: &mut Reply<'_>) -> Result<(), ()>
+    {
+        drop(reply
+            .content(Some(get_locale!(
+                "commands.not_implemented",
+                locale = &ctx.interaction.locale)))
+            .send().await);
+        return Ok(());
+    }
 }
 
 pub trait ModuleBase
@@ -37,7 +48,8 @@ pub type Module = Box<dyn ModuleBase + Send + Sync>;
 pub type ModulesArray = Vec<Module>;
 
 #[macro_export]
-/// Intended for single use in modules' mod.rs file
+/// Utility macro intended for declaring a module within
+/// its corresponding `mod.rs` file
 macro_rules! declare_module
 {
     ($name: ident,

@@ -10,9 +10,10 @@
 /* ************************************************************************** */
 
 use async_trait::async_trait;
-use serenity::all::{CreateCommand, CreateInteractionResponse, CreateInteractionResponseMessage};
+use serenity::all::{CreateCommand};
 use crate::core::InteractionContext;
 use crate::modules::{helper, SubModuleBase};
+use crate::modules::helper::Reply;
 
 pub struct EmbedCreator {}
 
@@ -27,17 +28,14 @@ impl SubModuleBase for EmbedCreator
     fn register_command(&self) -> Option<CreateCommand>
     {
         return Some(helper::new_command(self)
-            .description("Handles embed creation")
             .dm_permission(false));
     }
 
-    async fn run_command(&self, ctx: InteractionContext<'_>) -> Result<(), ()>
+    async fn run_command(&self, _: &InteractionContext<'_>, reply: &mut Reply<'_>) -> Result<(), ()>
     {
-        let _ = ctx.interaction.create_response(&ctx.client.http,
-            CreateInteractionResponse::Message(
-                CreateInteractionResponseMessage::new()
-                    .content("")
-            )).await;
+        drop(reply
+            .content(Some("Coming soon..."))
+            .send().await);
         return Ok(());
     }
 }

@@ -5,19 +5,16 @@
 //   '-._.(;;;)._.-'
 //   .-'  ,`"`,  '-.
 //  (__.-'/   \'-.__)  By: Rosie (https://github.com/BlankRose)
-//      //\   /        Created at: May 13, 2024 [4:27 AM]
+//      //\   /        Created at: May 19, 2024 [7:01 AM]
 //     ||  '-'
 /* ************************************************************************** */
 
-mod all;
-mod base;
-pub(crate) mod helper;
+pub(crate) mod ping;
 
-pub use all::Modules;
-pub use base::*;
-
-pub(crate) mod prettier;
-pub(crate) mod basic;
-
-pub use prettier::Prettier;
-pub use basic::Basic;
+use crate::declare_module;
+declare_module!(
+    Basic,
+    description "All basic commands, which are always enable per default",
+    docs "",
+    sub_modules ping::PingShard{}
+);

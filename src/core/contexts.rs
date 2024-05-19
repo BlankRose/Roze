@@ -16,7 +16,7 @@ pub struct InteractionContext<'a>
 {
     pub database: &'a Database,
     pub client: Context,
-    pub interaction: CommandInteraction
+    pub interaction: CommandInteraction,
 }
 
 impl<'a> InteractionContext<'a>

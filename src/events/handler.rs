@@ -43,6 +43,6 @@ impl EventHandler for Handler
     async fn interaction_create(&self, context: Context, interaction: Interaction)
     {
         if interaction.kind() == InteractionType::Command
-            { self.modules.run_command(InteractionContext::new(&self.database, context, interaction.command().unwrap())); }
+            { self.modules.run_command(InteractionContext::new(&self.database, context, interaction.command().unwrap())).await; }
     }
 }
