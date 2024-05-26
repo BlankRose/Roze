@@ -61,12 +61,12 @@ impl Modules
                 }
             }
         }
-        let _ = Reply::new(&ctx)
+        drop(Reply::new(&ctx)
             .content(Some(get_locale!(
                 "commands.not_found",
                 locale = &ctx.interaction.locale
             )))
             .ephemeral(true)
-            .send().await;
+            .send().await);
     }
 }

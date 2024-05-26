@@ -155,7 +155,7 @@ impl Localization
 
 lazy_static!(
     pub static ref LOCALES: Localization
-        = Localization::new("locales", "en-US.lang");
+        = Localization::new("locales", "en-US");
 );
 
 #[macro_export]

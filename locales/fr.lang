@@ -1,9 +1,23 @@
-commands.not_found              = On n'a pas pu trouver la commande que vous recherchiez... :(
-commands.not_implemented        = Cette commande n'est pas encore implémentée!
+commands.not_found                                  = On n'a pas pu trouver la commande que vous recherchiez... :(
+commands.not_implemented                            = Cette commande n'est pas encore implémentée!
 
-commands.embed.name             = embed
-commands.embed.description      = Gère la création d'embeds
+commands.embed.name                                 = embed
+commands.embed.description                          = Gère la création d'embeds
+commands.embed.options.new.name                     = nouveau
+commands.embed.options.new.description              = Créé une nouvelle embed, prêt a être éditée
+commands.embed.options.set_title.name               = changer_titre
+commands.embed.options.set_title.description        = Défini un nouveau titre
+commands.embed.options.set_description.name         = changer_description
+commands.embed.options.set_description.description  = Défini une nouvelle description
+commands.embed.options.set_color.name               = changer_couleur
+commands.embed.options.set_color.description        = Défini une nouvelle couleur
+commands.embed.options.title.name                   = titre
+commands.embed.options.title.description            = Nouveau titre
+commands.embed.options.description.name             = description
+commands.embed.options.description.description      = Nouvelle description
+commands.embed.options.color.name                   = couleur
+commands.embed.options.color.description            = Nouvelle couleur en hexadécimale
 
-commands.ping.name              = ping
-commands.ping.description       = Envoie un ping à l'application
-commands.ping.reply             = Pong, sur le shard $0
+commands.ping.name                                  = ping
+commands.ping.description                           = Envoie un ping à l'application
+commands.ping.reply                                 = Pong, depuis le shard $0

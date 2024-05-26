@@ -1,9 +1,27 @@
-commands.not_found              = Couldnt find the command you were looking for... :(
-commands.not_implemented        = This command is not implemented!
+commands.not_found                                  = Couldn't find the command you were looking for... :(
+commands.not_implemented                            = This command is not implemented!
+commands.not_implemented_sub                        = This sub command is not implemented!
+commands.missing_required                           = Missing required arguments...
 
-commands.embed.name             = embed
-commands.embed.description      = Handles embed creation
+commands.embed.name                                 = embed
+commands.embed.description                          = Handles embed creation
+commands.embed.options.new.name                     = new
+commands.embed.options.new.description              = Creates a new embed, ready to be edited
+commands.embed.options.delete.name                  = delete
+commands.embed.options.delete.description           = Deletes an existing embed
+commands.embed.options.set_title.name               = set_title
+commands.embed.options.set_title.description        = Change the embed's title
+commands.embed.options.set_description.name         = set_description
+commands.embed.options.set_description.description  = Change the embed's description
+commands.embed.options.set_color.name               = set_color
+commands.embed.options.set_color.description        = Change the embed's color
+commands.embed.options.title.name                   = title
+commands.embed.options.title.description            = New title
+commands.embed.options.description.name             = description
+commands.embed.options.description.description      = New description
+commands.embed.options.color.name                   = color
+commands.embed.options.color.description            = New color in hex value
 
-commands.ping.name              = ping
-commands.ping.description       = Pings the application
-commands.ping.reply             = Pong, on shard $0
+commands.ping.name                                  = ping
+commands.ping.description                           = Pings the application
+commands.ping.reply                                 = Pong, from shard $0
